@@ -1,6 +1,7 @@
 package com.example.astroids.game_src.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
@@ -10,8 +11,16 @@ import android.view.SurfaceHolder;
 import com.example.astroids.game_src.main.inptu.Accelrator;
 import com.example.astroids.game_src.screen.GameView;
 import com.example.astroids.game_src.state.GameState;
+import com.example.astroids.game_src.state.PauseState;
 import com.example.astroids.game_src.state.State;
 import com.example.astroids.game_src.state.StateManager;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Game implements Runnable   {
 
@@ -21,6 +30,7 @@ public class Game implements Runnable   {
 
     //DEBUGGING
     private static final String TAG = "Game";
+    private static final String FILENAME = "GameSave";
 
     //Game Engine Stuff
     private static final int REFRESHRATE = 60; // fps
@@ -51,17 +61,26 @@ public class Game implements Runnable   {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
+        Log.d(TAG,"Game()");
     }
 
     private void init(){
-        gameState = new GameState();
+        Log.d(TAG,"init()");
+
+        if (gameState == null) {
+            gameState = new GameState();
+        }
+
         accelrator = new Accelrator();
 
-        StateManager.setState(gameState);
+        if (StateManager.getState() == null) {
+            StateManager.setState(gameState);
+        }
     }
 
     @Override
     public void run() {
+        Log.d(TAG,"run()");
         init();
 
 
@@ -112,7 +131,6 @@ public class Game implements Runnable   {
 
 
         //Stops Thread
-        stop();
     }
 
     private void tick(){
@@ -150,8 +168,71 @@ public class Game implements Runnable   {
 
 
 
+
+    //Persistent Methods
+    public void onPause(Context context){
+
+        if (accelrator != null) {
+            accelrator.onPause();
+        }
+        if (StateManager.getState() != null) {
+            try {
+                Log.d(TAG, "Saving States");
+                FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                os.writeObject(gameState);
+
+                os.close();
+                fos.close();
+
+                Log.d(TAG, "State succesfull saved");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(TAG, "State not saved");
+            }
+        }
+//        if (StateManager.getState() != null){
+//            StateManager.getState().onPause();
+//        }
+    }
+
+    public void onResume(Context context){
+        if (accelrator != null) {
+            accelrator.onResume();
+        }
+
+        try {
+            Log.d(TAG,"Loding State");
+            FileInputStream fis = context.openFileInput(FILENAME);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            State state = (State) is.readObject();
+
+            Log.d(TAG, "State Size:"+ fis.getChannel().size() + "bytes");
+
+            is.close();
+            fis.close();
+
+            if (state.getClass() == GameState.class){
+                Log.d(TAG,"State is gameState");
+                gameState = state;
+            }
+
+            Log.d(TAG,"State succesfull loded");
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d(TAG,"State not loded");
+        }
+
+    }
+
+
+
+
+
+    //Starten des Threads
     public synchronized void start()
     {
+        Log.d(TAG,"start()");
         if (running)
             return;
 
@@ -162,19 +243,23 @@ public class Game implements Runnable   {
         thread.start();
     }
 
+    //Stoppen des Threads
     public synchronized void stop()
     {
+        Log.d(TAG,"stop()");
         if (!running)
             return;
 
         running = false;
         try
         {
+            Log.d(TAG,"stopping Thread");
             thread.join();
+            Log.d(TAG,"stopped Thread");
         } catch (InterruptedException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            Log.d(TAG,"stopping Thread FAILED");
         }
     }
 

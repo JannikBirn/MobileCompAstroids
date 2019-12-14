@@ -4,18 +4,17 @@ import android.graphics.Canvas;
 
 import com.example.astroids.game_src.entities.creatures.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EntityManager {
-
-    private Player player;
+public class EntityManager implements Serializable {
 
     private ArrayList<Entity> entities;
 
     public EntityManager(Player player)
     {
-        this.player = player;
         this.entities = new ArrayList<Entity>();
+        entities.add(player);
     }
 
     public void tick()
@@ -42,7 +41,11 @@ public class EntityManager {
 //            }
 //        }
 
-        player.tick();
+        for (Entity entity : entities){
+            entity.tick();
+        }
+
+
     }
 
     public void render(Canvas c)
@@ -61,8 +64,11 @@ public class EntityManager {
 //                e.render(g);
 //            }
 //        }
-        player.render(c);
-    }
 
+        for (Entity entity : entities){
+            entity.render(c);
+        }
+
+    }
 
 }

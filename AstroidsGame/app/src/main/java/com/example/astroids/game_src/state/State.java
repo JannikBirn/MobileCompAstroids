@@ -2,7 +2,9 @@ package com.example.astroids.game_src.state;
 
 import android.graphics.Canvas;
 
-public abstract class State {
+import java.io.Serializable;
+
+public abstract class State implements Serializable {
 
     public State()
     {
@@ -13,7 +15,6 @@ public abstract class State {
 
     public abstract void render(Canvas c);
 
-    public abstract void click();
-
     public abstract void init();
+
 }

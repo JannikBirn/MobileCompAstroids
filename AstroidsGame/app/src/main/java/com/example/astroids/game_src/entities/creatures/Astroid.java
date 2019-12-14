@@ -22,8 +22,6 @@ public class Astroid extends Creature {
 
     }
 
-    @Override
-    public void onResume(String s) {
 
-    }
+
 }

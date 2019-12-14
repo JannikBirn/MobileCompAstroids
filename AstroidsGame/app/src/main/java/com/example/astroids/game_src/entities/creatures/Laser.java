@@ -20,8 +20,5 @@ public class Laser extends Creature{
 
     }
 
-    @Override
-    public void onResume(String s) {
 
-    }
 }

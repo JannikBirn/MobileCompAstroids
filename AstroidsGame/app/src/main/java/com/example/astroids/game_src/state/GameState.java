@@ -27,13 +27,11 @@ public class GameState extends State {
         entityManager.render(c);
     }
 
-    @Override
-    public void click() {
 
-    }
 
     @Override
     public void init() {
 
     }
+
 }

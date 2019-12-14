@@ -26,7 +26,7 @@ public class Accelrator implements SensorEventListener {
     }
 
 
-    public void onResume(String s) {
+    public void onResume() {
         sensorManager.registerListener(this,accelrometer,SensorManager.SENSOR_DELAY_GAME);
         Log.d(TAG,"Starten Sensor Listener");
     }

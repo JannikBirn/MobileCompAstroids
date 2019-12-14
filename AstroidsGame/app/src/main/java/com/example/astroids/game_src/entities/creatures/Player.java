@@ -22,14 +22,14 @@ public class Player extends Creature  {
     private static final String TAG = "PLAYER";
 
 
-    private Paint paint;
+    //private Paint paint;
 
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         Handler.getInstance().setPlayer(this);
-        paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.RED);
+//        paint = new Paint();
+//        paint.setStyle(Paint.Style.FILL);
+//        paint.setColor(Color.RED);
 
         init();
     }
@@ -59,16 +59,11 @@ public class Player extends Creature  {
 
     @Override
     public void render(Canvas c) {
+        Paint   paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.RED);
         c.drawRect(x,y,x+width,y+height, paint);
     }
-
-    @Override
-    public void onResume(String s) {
-
-    }
-
-
-
 
 
 

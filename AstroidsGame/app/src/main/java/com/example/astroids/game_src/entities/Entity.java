@@ -5,11 +5,13 @@ import android.graphics.Canvas;
 
 import androidx.constraintlayout.solver.widgets.Rectangle;
 
-public abstract class Entity {
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable {
 
     protected float x,y;
     protected int width,height;
-    protected Rectangle bounds;
+    //protected Rectangle bounds;
     protected boolean delete;
 
     public Entity(float x, float y, int width, int height){
@@ -19,15 +21,14 @@ public abstract class Entity {
         this.height = height;
         delete = false;
 
-        bounds = new Rectangle();
-        bounds.setBounds(0, 0, width,height);
+        //bounds = new Rectangle();
+        //bounds.setBounds(0, 0, width,height);
     }
 
     public abstract void tick();
 
     public abstract void render(Canvas c);
 
-    public abstract void onResume(String s);
 
     public float getX()
     {
