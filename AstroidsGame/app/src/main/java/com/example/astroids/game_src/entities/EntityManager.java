@@ -2,7 +2,7 @@ package com.example.astroids.game_src.entities;
 
 import android.graphics.Canvas;
 
-import com.example.astroids.game_src.entities.creatures.Player;
+import com.example.astroids.game_src.entities.creatures.player.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class EntityManager implements Serializable {
 
     public EntityManager(Player player)
     {
-        this.entities = new ArrayList<Entity>();
+        this.entities = new ArrayList<>();
         entities.add(player);
     }
 

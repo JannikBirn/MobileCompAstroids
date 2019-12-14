@@ -1,11 +1,9 @@
 package com.example.astroids.game_src.state;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 import com.example.astroids.game_src.entities.EntityManager;
-import com.example.astroids.game_src.entities.creatures.Player;
+import com.example.astroids.game_src.entities.creatures.player.Player;
 
 public class GameState extends State {
 
@@ -13,7 +11,7 @@ public class GameState extends State {
     private EntityManager entityManager;
 
     public GameState(){
-        player = new Player(100,100,50,50);
+        player = new Player(100,100,100,200);
         entityManager = new EntityManager(player);
     }
 

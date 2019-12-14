@@ -30,6 +30,9 @@ public class Game implements Runnable   {
 
     //DEBUGGING
     private static final String TAG = "Game";
+    private static final boolean NEWGAMEONSTART = true;
+
+    //SAVINNG
     private static final String FILENAME = "GameSave";
 
     //Game Engine Stuff
@@ -67,15 +70,14 @@ public class Game implements Runnable   {
     private void init(){
         Log.d(TAG,"init()");
 
-        if (gameState == null) {
+        if (gameState == null || NEWGAMEONSTART) {
             gameState = new GameState();
         }
 
         accelrator = new Accelrator();
 
-        if (StateManager.getState() == null) {
-            StateManager.setState(gameState);
-        }
+        StateManager.setState(gameState);
+
     }
 
     @Override

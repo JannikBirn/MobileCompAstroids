@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.example.astroids.game_src.main.Game;
+import com.example.astroids.game_src.main.Handler;
 import com.example.astroids.game_src.state.StateManager;
 
 import java.io.FileInputStream;
@@ -35,6 +36,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Handler.getInstance().setScreenHeight(holder.getSurfaceFrame().height());
+        Handler.getInstance().setScreenWith(holder.getSurfaceFrame().width());
         game.start();
     }
 

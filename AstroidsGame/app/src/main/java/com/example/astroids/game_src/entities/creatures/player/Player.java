@@ -1,4 +1,4 @@
-package com.example.astroids.game_src.entities.creatures;
+package com.example.astroids.game_src.entities.creatures.player;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,36 +14,24 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.astroids.game_src.entities.Entity;
+import com.example.astroids.game_src.entities.creatures.Creature;
 import com.example.astroids.game_src.main.Handler;
 
-public class Player extends Creature  {
+public class Player extends Creature {
 
     //Debugging
     private static final String TAG = "PLAYER";
 
-
-    //private Paint paint;
+    private BulletManager bulletManager;
 
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         Handler.getInstance().setPlayer(this);
-//        paint = new Paint();
-//        paint.setStyle(Paint.Style.FILL);
-//        paint.setColor(Color.RED);
+        bulletManager = new BulletManager(this);
 
-        init();
-    }
-
-    private void getInput(){
+        canMoveOffScreen = false;
 
     }
-
-
-    private void init(){
-
-
-    }
-
 
     @Override
     public void tick() {
@@ -51,20 +39,25 @@ public class Player extends Creature  {
 //        if (Math.abs(Handler.getInstance().getAccelrator().values[1]) > 1){
 //            Log.d(TAG,"Player movement Triggerd");
 //        }
-        speedx = 5*Handler.getInstance().getAccelrator().values[1];
-        speedy = 5*Handler.getInstance().getAccelrator().values[0];
+        speedx = 5 * Handler.getInstance().getAccelrator().values[1];
+        speedy = 5 * Handler.getInstance().getAccelrator().values[0];
 
         move();
+
+        bulletManager.fire();
+        bulletManager.tick();
+
     }
 
     @Override
     public void render(Canvas c) {
-        Paint   paint = new Paint();
+        Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.RED);
-        c.drawRect(x,y,x+width,y+height, paint);
-    }
+        c.drawRect(x, y, x + width, y + height, paint);
 
+        bulletManager.render(c);
+    }
 
 
 }
