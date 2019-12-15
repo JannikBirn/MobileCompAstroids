@@ -8,10 +8,22 @@ import com.example.astroids.game_src.entities.creatures.Creature;
 
 public class Bullet extends Creature {
 
+    double angle;
+    float speed;
 
-    public Bullet(float x, float y, int width, int height) {
+
+    public Bullet(float x, float y, int width, int height, float speed, double angle) {
         super(x, y, width, height);
-        speedy = -40;
+        this.angle = 180+angle;
+        this.speed = speed;
+    }
+
+    @Override
+    public void move(){
+        speedx = (float) (speed * Math.cos(Math.toRadians(90+angle)));
+        speedy = (float) (speed * Math.sin(Math.toRadians(90+angle)));
+
+        super.move();
     }
 
     @Override
@@ -24,9 +36,9 @@ public class Bullet extends Creature {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.BLUE);
-//        c.save();
-//        c.rotate(15,x,y);
+        c.save();
+        c.rotate((float) angle,x,y);
         c.drawRect(x, y, x + width, y + height, paint);
-//        c.restore();
+        c.restore();
     }
 }

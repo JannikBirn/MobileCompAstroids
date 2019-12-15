@@ -11,7 +11,7 @@ public class GameState extends State {
     private EntityManager entityManager;
 
     public GameState(){
-        player = new Player(100,100,100,200);
+        player = new Player(100,100);
         entityManager = new EntityManager(player);
     }
 

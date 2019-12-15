@@ -27,7 +27,10 @@ public class BulletManager implements Serializable {
 
     public void fire(){
         if (tickSincelastAttck >= attackSpeed) {
-            bullets.add(new Bullet(player.getX(), player.getY(), 5, 50));
+            bullets.add(new Bullet(player.getX(), player.getY(), 5, 30, 25 , -20));
+            bullets.add(new Bullet(player.getX()+(player.getWidth()/2), player.getY(), 5, 30, 25, 0));
+            bullets.add(new Bullet(player.getX()+player.getWidth(), player.getY(), 5, 30, 25, 20));
+
             tickSincelastAttck = 0;
         }else {
             tickSincelastAttck++;

@@ -1,19 +1,10 @@
 package com.example.astroids.game_src.entities.creatures.player;
 
-import android.app.Activity;
-import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.astroids.game_src.entities.Entity;
+import com.example.astroids.R;
 import com.example.astroids.game_src.entities.creatures.Creature;
 import com.example.astroids.game_src.main.Handler;
 
@@ -24,8 +15,13 @@ public class Player extends Creature {
 
     private BulletManager bulletManager;
 
-    public Player(float x, float y, int width, int height) {
-        super(x, y, width, height);
+
+    public Player(float x, float y) {
+        super(x, y, 0, 0);
+        Bitmap bitmap = BitmapFactory.decodeResource(Handler.getInstance().getMainActivity().getResources(), R.drawable.raumschiff);
+        height = bitmap.getHeight();
+        width = bitmap.getWidth();
+
         Handler.getInstance().setPlayer(this);
         bulletManager = new BulletManager(this);
 
@@ -40,7 +36,7 @@ public class Player extends Creature {
 //            Log.d(TAG,"Player movement Triggerd");
 //        }
         speedx = 5 * Handler.getInstance().getAccelrator().values[1];
-        speedy = 5 * Handler.getInstance().getAccelrator().values[0];
+        speedy = 5 * (Handler.getInstance().getAccelrator().values[0]-5);
 
         move();
 
@@ -51,10 +47,9 @@ public class Player extends Creature {
 
     @Override
     public void render(Canvas c) {
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.RED);
-        c.drawRect(x, y, x + width, y + height, paint);
+//        c.drawRect(x, y, x + width, y + height, paint);
+        Bitmap bitmap = BitmapFactory.decodeResource(Handler.getInstance().getMainActivity().getResources(), R.drawable.raumschiff);
+        c.drawBitmap(bitmap,x,y,null);
 
         bulletManager.render(c);
     }
