@@ -1,7 +1,8 @@
 package com.example.astroids.game_src.main;
 
-import com.example.astroids.game_src.entities.creatures.Player;
+import com.example.astroids.game_src.entities.creatures.player.Player;
 import com.example.astroids.game_src.main.inptu.Accelrator;
+import com.example.astroids.game_src.main.inptu.Touch;
 
 public class Handler {
     //Handler Stuff
@@ -19,6 +20,34 @@ public class Handler {
     private MainActivity mainActivity;
     private Player player;
     private Accelrator accelrator;
+    private Touch touch;
+    private int screenHeight, screenWith;
+
+    public Touch getTouch() {
+        return touch;
+    }
+
+    public void setTouch(Touch touch) {
+        this.touch = touch;
+    }
+
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public void setScreenHeight(int screenHeight) {
+        this.screenHeight = screenHeight;
+    }
+
+    public int getScreenWith() {
+        return screenWith;
+    }
+
+    public void setScreenWith(int screenWith) {
+        this.screenWith = screenWith;
+    }
+
 
     public MainActivity getMainActivity() {
         return mainActivity;

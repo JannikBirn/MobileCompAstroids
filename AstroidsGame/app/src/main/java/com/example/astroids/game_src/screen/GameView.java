@@ -2,22 +2,16 @@ package com.example.astroids.game_src.screen;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.example.astroids.game_src.main.Game;
-import com.example.astroids.game_src.state.StateManager;
+import com.example.astroids.game_src.main.Handler;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
-
+    public boolean NEWGAMEONSTART = true;
 
     private Game game;
 
@@ -35,6 +29,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Handler.getInstance().setScreenHeight(holder.getSurfaceFrame().height());
+        Handler.getInstance().setScreenWith(holder.getSurfaceFrame().width());
         game.start();
     }
 
@@ -57,15 +53,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void onPause(Context context){
         game.onPause(context);
         game.stop();
-
-
-
     }
 
     public void onResume(Context context){
         init();
         game.onResume(context);
-
-
     }
 }

@@ -3,8 +3,6 @@ package com.example.astroids.game_src.entities;
 
 import android.graphics.Canvas;
 
-import androidx.constraintlayout.solver.widgets.Rectangle;
-
 import java.io.Serializable;
 
 public abstract class Entity implements Serializable {

@@ -1,22 +1,18 @@
 package com.example.astroids.game_src.main;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.example.astroids.game_src.main.inptu.Accelrator;
 import com.example.astroids.game_src.screen.GameView;
 import com.example.astroids.game_src.state.GameState;
-import com.example.astroids.game_src.state.PauseState;
 import com.example.astroids.game_src.state.State;
 import com.example.astroids.game_src.state.StateManager;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -24,16 +20,15 @@ import java.io.ObjectOutputStream;
 
 public class Game implements Runnable   {
 
-
-    private int width, height;
-    public String title;
-
     //DEBUGGING
     private static final String TAG = "Game";
+
+
+    //SAVINNG
     private static final String FILENAME = "GameSave";
 
     //Game Engine Stuff
-    private static final int REFRESHRATE = 60; // fps
+    private static final int REFRESHRATE = 30; // fps
     private static final int GAMETICKRATE = 30;
     private static final double TIMEPERGAMETICK = 1000000000 / GAMETICKRATE;
     private static final double TIMEPERFRAMETICK = 1000000000 / REFRESHRATE;
@@ -49,9 +44,6 @@ public class Game implements Runnable   {
 
     // States
     private State gameState;
-    //private State menuState;
-    //private State buymenuState;
-    //private State afterGameState;
 
     //Input
     private Accelrator accelrator;
@@ -67,23 +59,22 @@ public class Game implements Runnable   {
     private void init(){
         Log.d(TAG,"init()");
 
-        if (gameState == null) {
+        if (gameState == null || gameView.NEWGAMEONSTART) {
+            //New game if there is none or one should be created
             gameState = new GameState();
+            gameView.NEWGAMEONSTART = false;
         }
 
         accelrator = new Accelrator();
 
-        if (StateManager.getState() == null) {
-            StateManager.setState(gameState);
-        }
+        StateManager.setState(gameState);
+
     }
 
     @Override
     public void run() {
         Log.d(TAG,"run()");
         init();
-
-
 
         double deltaGameTick = 0;
         double deltaFrameTick = 0;
@@ -166,9 +157,6 @@ public class Game implements Runnable   {
 
     }
 
-
-
-
     //Persistent Methods
     public void onPause(Context context){
 
@@ -191,9 +179,6 @@ public class Game implements Runnable   {
                 Log.d(TAG, "State not saved");
             }
         }
-//        if (StateManager.getState() != null){
-//            StateManager.getState().onPause();
-//        }
     }
 
     public void onResume(Context context){
