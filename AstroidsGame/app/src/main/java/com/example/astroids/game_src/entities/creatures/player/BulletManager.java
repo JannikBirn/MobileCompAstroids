@@ -15,21 +15,25 @@ public class BulletManager implements Serializable {
 
     private  Player player;
     private ArrayList<Bullet> bullets;
-    private int attackSpeed;
     private int tickSincelastAttck;
+
+    //Stats
+    private int attackSpeed;
+    private int bulletSpeed;
 
     public BulletManager(Player player) {
         this.player = player;
         this.bullets = new ArrayList<>();
-        attackSpeed = 15;
+        attackSpeed = 1;
+        bulletSpeed = 50;
         tickSincelastAttck = 0;
     }
 
     public void fire(){
         if (tickSincelastAttck >= attackSpeed) {
-            bullets.add(new Bullet(player.getX(), player.getY(), 5, 30, 25 , -20));
-            bullets.add(new Bullet(player.getX()+(player.getWidth()/2), player.getY(), 5, 30, 25, 0));
-            bullets.add(new Bullet(player.getX()+player.getWidth(), player.getY(), 5, 30, 25, 20));
+            bullets.add(new Bullet(player.getX(), player.getY(), 5, 30, bulletSpeed , -20));
+            bullets.add(new Bullet(player.getX()+(player.getWidth()/2), player.getY(), 5, 30, bulletSpeed, 0));
+            bullets.add(new Bullet(player.getX()+player.getWidth(), player.getY(), 5, 30, bulletSpeed, 20));
 
             tickSincelastAttck = 0;
         }else {

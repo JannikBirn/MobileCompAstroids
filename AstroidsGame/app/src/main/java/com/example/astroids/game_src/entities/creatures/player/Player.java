@@ -14,6 +14,7 @@ public class Player extends Creature {
     private static final String TAG = "PLAYER";
 
     private BulletManager bulletManager;
+    private float movementSpeed;
 
 
     public Player(float x, float y) {
@@ -26,6 +27,7 @@ public class Player extends Creature {
         bulletManager = new BulletManager(this);
 
         canMoveOffScreen = false;
+        movementSpeed= 10;
 
     }
 
@@ -35,8 +37,8 @@ public class Player extends Creature {
 //        if (Math.abs(Handler.getInstance().getAccelrator().values[1]) > 1){
 //            Log.d(TAG,"Player movement Triggerd");
 //        }
-        speedx = 5 * Handler.getInstance().getAccelrator().values[1];
-        speedy = 5 * (Handler.getInstance().getAccelrator().values[0]-5);
+        speedx = movementSpeed * Handler.getInstance().getAccelrator().values[1];
+        speedy = movementSpeed * (Handler.getInstance().getAccelrator().values[0]-5);
 
         move();
 

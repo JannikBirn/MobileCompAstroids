@@ -28,7 +28,7 @@ public class Game implements Runnable   {
     private static final String FILENAME = "GameSave";
 
     //Game Engine Stuff
-    private static final int REFRESHRATE = 60; // fps
+    private static final int REFRESHRATE = 30; // fps
     private static final int GAMETICKRATE = 30;
     private static final double TIMEPERGAMETICK = 1000000000 / GAMETICKRATE;
     private static final double TIMEPERFRAMETICK = 1000000000 / REFRESHRATE;
